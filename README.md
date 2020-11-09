@@ -22,6 +22,7 @@ export PORT=hdmi-output-2
 export MICROPHONE=alsa_input.pci-0000_00_1f.3.analog-stereo
 export OUTPUT=bluez_sink.00_22_6C_0A_18_E2.a2dp_sink
 export PORT=speaker-output
+export CARD=bluez_card.00_22_6C_0A_18_E2
 
 export MONITOR="${OUTPUT}.monitor"
 while true; do
@@ -33,8 +34,8 @@ while true; do
   wait
   export AUDIO_OFFSET_SEC=$(audio-offset-finder --find-offset-of /tmp/microphone.wav --within /tmp/monitor.wav | head -n1 | cut -d ' ' -f2)
   export CURRENT_LATENCY_USEC=$(pacmd list-sinks | grep "${PORT}:" | cut -d '(' -f2 | cut -d ' ' -f5)
-  export REQUIRED_LATENCY_USEC=$(echo "scale=0; ((${AUDIO_OFFSET_SEC} - 3) * 1000000 + ${CURRENT_LATENCY_USEC}) / 1" | bc)
+  export REQUIRED_LATENCY_USEC=$(echo "scale=0; (${CURRENT_LATENCY_USEC} + (3 - ${AUDIO_OFFSET_SEC}) * 1000000) / 1" | bc)
   echo "Audio offset is ${AUDIO_OFFSET_SEC} seconds. Current latency is ${CURRENT_LATENCY_USEC}. Required latency is ${REQUIRED_LATENCY_USEC}."
-  pacmd set-port-latency-offset ${OUTPUT} ${PORT} ${REQUIRED_LATENCY_USEC}  
+  pacmd set-port-latency-offset ${CARD} ${PORT} ${REQUIRED_LATENCY_USEC}  
 done
 ```
