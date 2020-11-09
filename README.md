@@ -34,7 +34,7 @@ while true; do
   wait
   export AUDIO_OFFSET_SEC=$(audio-offset-finder --find-offset-of /tmp/microphone.wav --within /tmp/monitor.wav | head -n1 | cut -d ' ' -f2)
   export CURRENT_LATENCY_USEC=$(pacmd list-sinks | grep "${PORT}:" | cut -d '(' -f2 | cut -d ' ' -f5)
-  export REQUIRED_LATENCY_USEC=$(echo "scale=0; (${CURRENT_LATENCY_USEC} + (3 - ${AUDIO_OFFSET_SEC}) * 1000000) / 1" | bc)
+  export REQUIRED_LATENCY_USEC=$(echo "scale=0; ((3 - ${AUDIO_OFFSET_SEC}) * 1000000) / 1" | bc)
   echo "Audio offset is ${AUDIO_OFFSET_SEC} seconds. Current latency is ${CURRENT_LATENCY_USEC}. Required latency is ${REQUIRED_LATENCY_USEC}."
   pacmd set-port-latency-offset ${CARD} ${PORT} ${REQUIRED_LATENCY_USEC}  
 done
