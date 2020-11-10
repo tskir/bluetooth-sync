@@ -2,9 +2,12 @@
 
 ## Configure
 ```bash
+sudo apt -y install phonon4qt5-backend-vlc
 sudo python3 -m pip uninstall -y audio-offset-finder
 sudo python3 -m pip install git+https://github.com/monotony113/audio-offset-finder.git
 ```
+
+Select Phonon backend in VLC.
 
 * To get the microphone: `pacmd list-sources | egrep '^\s+name: .*alsa_input'`.
 * To get the output: `pacmd list-sinks | egrep '^\s+name: .*alsa_output'`.
