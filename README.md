@@ -14,13 +14,21 @@ sudo python3 -m pip install git+https://github.com/monotony113/audio-offset-find
 ## Run
 
 ```bash
-# Desktop
+# Desktop for testing
 export MICROPHONE=alsa_input.usb-046d_0825_07B43310-02.mono-fallback
 export OUTPUT=alsa_output.pci-0000_08_00.1.hdmi-stereo-extra2
 export PORT=hdmi-output-2
 
 # Laptop + projector
 export MICROPHONE=alsa_input.pci-0000_00_1f.3.analog-stereo
+export OUTPUT=bluez_sink.00_22_6C_0A_18_E2.a2dp_sink
+export PORT=speaker-output
+export CARD=bluez_card.00_22_6C_0A_18_E2
+
+###########
+
+# Desktop + projector
+export MICROPHONE=alsa_input.usb-046d_0825_07B43310-02.mono-fallback
 export OUTPUT=bluez_sink.00_22_6C_0A_18_E2.a2dp_sink
 export PORT=speaker-output
 export CARD=bluez_card.00_22_6C_0A_18_E2
