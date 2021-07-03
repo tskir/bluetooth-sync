@@ -45,7 +45,7 @@ while true; do
   export CURRENT_LATENCY_USEC=$(pacmd list-sinks | grep "${PORT}:" | cut -d '(' -f2 | cut -d ' ' -f5)
   export REQUIRED_LATENCY_USEC=$(echo "scale=0; ((3 - ${AUDIO_OFFSET_SEC}) * 1000000) / 1" | bc)
   echo "Audio offset is ${AUDIO_OFFSET_SEC} seconds. Current latency is ${CURRENT_LATENCY_USEC}. Required latency is ${REQUIRED_LATENCY_USEC}."
-  if ((REQUIRED_LATENCY_USEC >= 0 && REQUIRED_LATENCY_USEC <= 1000000)); then
+  if ((REQUIRED_LATENCY_USEC >= -2000000 && REQUIRED_LATENCY_USEC <= 2000000)); then
     pacmd set-port-latency-offset ${CARD} ${PORT} ${REQUIRED_LATENCY_USEC}  
   else
     echo "Required latency out of range: ${REQUIRED_LATENCY_USEC}"
