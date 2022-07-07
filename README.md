@@ -2,9 +2,7 @@
 
 ## Configure
 ```bash
-sudo apt -y install kodi
-sudo python3 -m pip uninstall -y audio-offset-finder
-sudo python3 -m pip install git+https://github.com/monotony113/audio-offset-finder.git
+python3 -m pip install --user audio-offset-finder
 ```
 
 * To get the microphone: `pacmd list-sources | egrep '^\s+name: .*alsa_input'`.
