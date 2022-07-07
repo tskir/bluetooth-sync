@@ -42,7 +42,7 @@ while true; do
   timeout 24 parecord --channels=1 -d $MICROPHONE /tmp/microphone.wav
   wait
   export CURRENT_LATENCY_USEC=$(pacmd list-sinks | grep "${PORT}:" | cut -d '(' -f2 | cut -d ' ' -f5)
-  export REQUIRED_LATENCY_USEC=$(python3 -c "from audio_offset_finder.audio_offset_finder import find_offset_between_files; print(int(find_offset_between_files('/tmp/microphone.wav', '/tmp/monitor.wav')['time_offset']*1000))")
+  export REQUIRED_LATENCY_USEC=$(python3 -c "from audio_offset_finder.audio_offset_finder import find_offset_between_files; print(int(find_offset_between_files('/tmp/microphone.wav', '/tmp/monitor.wav')['time_offset']*1000000))")
   echo "Audio offset is ${AUDIO_OFFSET_SEC} seconds. Current latency is ${CURRENT_LATENCY_USEC}. Required latency is ${REQUIRED_LATENCY_USEC}."
   if ((REQUIRED_LATENCY_USEC >= 0 && REQUIRED_LATENCY_USEC <= 1000000)); then
     pacmd set-port-latency-offset ${CARD} ${PORT} ${REQUIRED_LATENCY_USEC}  
